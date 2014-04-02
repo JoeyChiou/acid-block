@@ -1,4 +1,7 @@
 /* Javascript for the Acid XBlock. */
+
+var unidata = "α¢ι∂ χвℓσ¢к";
+
 function AcidBlock(runtime, element) {
 
     function acidData(key) {
@@ -29,7 +32,7 @@ function AcidBlock(runtime, element) {
             var $this = $(this);
             $.ajaxq("acid-queue", {
                 type: "POST",
-                data: {"VALUE": $this.data('value')},
+                data: {"VALUE": $this.data('value'), "UNIDATA": unidata},
                 url: $this.data('handler-url'),
                 success: function (ret) {
                     mark('success', '.server-storage-test-returned', $this);
@@ -38,7 +41,7 @@ function AcidBlock(runtime, element) {
 
                         $.ajaxq("acid-queue", {
                             type: "POST",
-                            data: {"VALUE": ret.value},
+                            data: {"VALUE": ret.value, "UNIDATA": unidata},
                             url: runtime.handlerUrl(element, "check_storage", ret.suffix, ret.query),
                             success: function (ret) {
                                 mark('success', '.client-storage-test-returned', $this);
